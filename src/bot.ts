@@ -14,18 +14,20 @@ bot.on(":voice", async (ctx) => {
     const userId = String(ctx.message?.from.id);
 
     const oggPath = await ogg.create(fullPath, userId);
+    console.log(oggPath);
+    
     const mp3Path = await ogg.toMp3(oggPath, userId);
+    console.log(mp3Path);
 
     const text = await openai.transcription(mp3Path);
+
     const response = await openai.chat(text);
 
-    await ctx.reply(
-      `Download your own file again: https://api.telegram.org/file/bot${process.env.BOT_API_KEY}/${filePath}`
-    );
+    // await ctx.reply(
+    //   `Download your own file again: https://api.telegram.org/file/bot${process.env.BOT_API_KEY}/${filePath}`
+    // );
 
-    await ctx.reply(
-      `${text}`
-    );
+    await ctx.reply(`${text}`);
   } catch (e: any) {
     console.error(e.message);
   }

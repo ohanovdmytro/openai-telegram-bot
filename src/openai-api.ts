@@ -1,4 +1,4 @@
-import { OpenAI } from "openai";
+import OpenAI from "openai";
 import { createReadStream } from "fs";
 import dotenv from "dotenv";
 dotenv.config();
@@ -21,12 +21,14 @@ class OpenAIApi {
 
   async transcription(mp3Path: any) {
     try {
-      await this.openai.audio.transcriptions.create({
-        file: createReadStream(`${mp3Path}`),
+      const response = await this.openai.audio.transcriptions.create({
+        file: createReadStream(`./voices/528941926.mp3`),
         model: "whisper-1",
       });
+
+      return response.text;
     } catch (e: any) {
-      console.error(e.message);
+      console.error("Error making transcription: ", e);
     }
   }
 }
