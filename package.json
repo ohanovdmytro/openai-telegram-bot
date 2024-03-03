@@ -5,21 +5,20 @@
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsx": "npx tsc",
-    "bot": "nodemon build/bot",
-    "build": "npx tsc && node build/bot"
+    "dev": "npx nodemon build/bot.js",
+    "start": "node build/bot.js",
+    "build": "npx tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
-    "@types/node": "^20.11.20",
+    "@grammyjs/hydrate": "^1.4.1",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "fluent-ffmpeg": "^2.1.2",
     "grammy": "^1.21.1",
-    "i": "^0.3.7",
     "nodemon": "^3.1.0",
     "npm": "^10.4.0",
     "openai": "^4.28.0"

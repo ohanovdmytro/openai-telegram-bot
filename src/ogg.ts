@@ -3,7 +3,6 @@ import ffmpeg from "fluent-ffmpeg";
 import installer from "@ffmpeg-installer/ffmpeg";
 import { createWriteStream } from "fs";
 import { dirname, resolve } from "path";
-import { removeFile } from "./utils.js";
 
 class OggConverter {
   constructor() {
@@ -17,10 +16,7 @@ class OggConverter {
         ffmpeg(input)
           .inputOption("-t 30")
           .output(outputPath)
-          .on("end", () => {
-            removeFile(input);
-            resolve(outputPath);
-          })
+          .on("end", () => resolve(outputPath))
           .on("error", (err) => reject(err.message))
           .run();
       });
@@ -43,7 +39,7 @@ class OggConverter {
         stream.on("finish", () => resolve(oggPath));
       });
     } catch (e: any) {
-      console.log("Error while creating ogg", e.message);
+      console.error("Error while creating ogg", e.message);
     }
   }
 }
