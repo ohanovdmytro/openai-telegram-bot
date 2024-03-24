@@ -6,11 +6,12 @@ import {
   GrammyError,
   HttpError,
 } from "grammy";
-import dotenv from "dotenv";
 import { ogg } from "./ogg.js";
 import { openai } from "./openai-api.js";
 import { hydrate, HydrateFlavor } from "@grammyjs/hydrate";
-dotenv.config();
+import config from "../config/default.json";
+// import dotenv from "dotenv";
+// dotenv.config();
 
 interface SessionData {
   role: string;
@@ -19,7 +20,7 @@ interface SessionData {
 }
 
 type MyContext = HydrateFlavor<Context & SessionFlavor<SessionData>>;
-const bot = new Bot<MyContext>(process.env.BOT_API_KEY);
+const bot = new Bot<MyContext>(config.BOT_API_KEY);
 
 function initial(): SessionData {
   return { role: "", content: "", messages: [] };
@@ -33,15 +34,18 @@ bot.api.setMyCommands([
   { command: "new", description: "Create a new prompt thread" },
 ]);
 
+//START COMMAND
 bot.command("start", async (ctx) => {
   await ctx.reply("Send a voice message or text prompt to work with ChatGPT.");
 });
 
+//NEW PROMPT COMMAND
 bot.command("new", async (ctx) => {
   ctx.session.messages = [];
   await ctx.reply("Waiting for your prompt!");
 });
 
+//VOICE PROMPT
 bot.on(":voice", async (ctx) => {
   try {
     const statusMessage = await ctx.reply("Transcripting message...");
@@ -79,6 +83,7 @@ bot.on(":voice", async (ctx) => {
   }
 });
 
+//TEXT PROMPT
 bot.on(":text", async (ctx) => {
   try {
     const statusMessage = await ctx.reply("Generating response...");
