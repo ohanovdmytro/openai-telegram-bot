@@ -1,9 +1,9 @@
 import OpenAI from "openai";
 import { ChatCompletionMessageParam } from "openai/resources/chat";
 import { createReadStream } from "fs";
-import config from '../config/default.json'
-// import dotenv from "dotenv";
-// dotenv.config();
+import config from "../config/default.json"
+import dotenv from "dotenv";
+dotenv.config();
 
 class OpenAIApi {
   private openai: OpenAI;

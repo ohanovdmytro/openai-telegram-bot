@@ -6,12 +6,12 @@ import {
   GrammyError,
   HttpError,
 } from "grammy";
+import dotenv from "dotenv";
 import { ogg } from "./ogg.js";
 import { openai } from "./openai-api.js";
 import { hydrate, HydrateFlavor } from "@grammyjs/hydrate";
-import config from "../config/default.json";
-// import dotenv from "dotenv";
-// dotenv.config();
+import config from "../config/default.json"
+dotenv.config();
 
 interface SessionData {
   role: string;
@@ -34,25 +34,22 @@ bot.api.setMyCommands([
   { command: "new", description: "Create a new prompt thread" },
 ]);
 
-//START COMMAND
 bot.command("start", async (ctx) => {
   await ctx.reply("Send a voice message or text prompt to work with ChatGPT.");
 });
 
-//NEW PROMPT COMMAND
 bot.command("new", async (ctx) => {
   ctx.session.messages = [];
   await ctx.reply("Waiting for your prompt!");
 });
 
-//VOICE PROMPT
 bot.on(":voice", async (ctx) => {
   try {
     const statusMessage = await ctx.reply("Transcripting message...");
 
     const voiceFile = await ctx.getFile();
     const filePath = voiceFile.file_path;
-    const fullPath = `https://api.telegram.org/file/bot${process.env.BOT_API_KEY}/${filePath}`;
+    const fullPath = `https://api.telegram.org/file/bot${config.BOT_API_KEY}/${filePath}`;
     const userId = String(ctx.message?.from.id);
 
     const oggPath = await ogg.create(fullPath, userId);
@@ -83,7 +80,6 @@ bot.on(":voice", async (ctx) => {
   }
 });
 
-//TEXT PROMPT
 bot.on(":text", async (ctx) => {
   try {
     const statusMessage = await ctx.reply("Generating response...");
