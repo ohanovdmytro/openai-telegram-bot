@@ -6,12 +6,10 @@ import {
   GrammyError,
   HttpError,
 } from "grammy";
-import dotenv from "dotenv";
 import { ogg } from "./ogg.js";
 import { openai } from "./openai-api.js";
 import { hydrate, HydrateFlavor } from "@grammyjs/hydrate";
 import config from "../config/default.json"
-dotenv.config();
 
 interface SessionData {
   role: string;
