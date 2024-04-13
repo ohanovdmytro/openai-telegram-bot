@@ -8,10 +8,9 @@ RUN npm ci
 
 COPY . .
 
-ENV PORT=3000
+RUN  npm run build
 
-ENV GENERATE_SOURCEMAP=false
-ENV NODE_OPTIONS=--max-old-space-size=6144
+ENV PORT=3000
 
 EXPOSE $PORT
 

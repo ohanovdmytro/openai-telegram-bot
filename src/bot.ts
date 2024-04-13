@@ -1,3 +1,4 @@
+
 import {
   Bot,
   Context,
@@ -6,10 +7,11 @@ import {
   GrammyError,
   HttpError,
 } from "grammy";
-import { ogg } from "./ogg.ts";
-import { openai } from "./openai-api.ts";
+import { ogg } from "./ogg.js";
+import { openai } from "./openai-api.js";
 import { hydrate, HydrateFlavor } from "@grammyjs/hydrate";
 import config from "../config/default.json"
+
 
 interface SessionData {
   role: string;
