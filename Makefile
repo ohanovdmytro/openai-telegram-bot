@@ -1,4 +1,4 @@
 build:
-	docker build -t openaibot .
+	docker build -t openai-telegram-bot .
 run:
-	docker run -d -p 3000:3000 --name openaibot --rm openaibot
+	docker run -d -p 3000:3000 --name openai-telegram-bot --rm openai-telegram-bot

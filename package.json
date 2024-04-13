@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx nodemon dist/bot.js",
     "build": "npx tsc",
-    "start": "node dist/bot.js"
+    "start": "npx tsc && node dist/bot.js"
   },
   "keywords": [],
   "author": "",

@@ -45,24 +45,25 @@ bot.command("new", async (ctx) => {
 
 bot.on(":voice", async (ctx) => {
   try {
-    const statusMessage = await ctx.reply("Transcripting message...");
+    const statusMessage = await ctx.reply("Transcribing message...");
 
     const voiceFile = await ctx.getFile();
     const filePath = voiceFile.file_path;
     const fullPath = `https://api.telegram.org/file/bot${config.BOT_API_KEY}/${filePath}`;
     const userId = String(ctx.message?.from.id);
 
-    const oggPath = await ogg.create(fullPath, userId);
-    const mp3Path = await ogg.toMp3(oggPath, userId);
+    const oggPath: string = await ogg.create(fullPath, userId);
+    const mp3Path: string = await ogg.toMp3(oggPath, userId);
 
-    console.log(`Working with ${userId} voice message!`);
+    console.log(`Working with ${userId}'s voice message!`);
 
-    const text = await openai.transcription(mp3Path);
+    const textPromise = openai.transcription(mp3Path); 
+
+    const text = await textPromise;
+
     await ctx.reply(`Your prompt: ${text}`, {
       reply_parameters: { message_id: ctx.msg.message_id },
     });
-
-    await statusMessage.editText("Generating response...");
 
     ctx.session.messages.push({ role: openai.roles.USER, content: text });
 
@@ -73,12 +74,16 @@ bot.on(":voice", async (ctx) => {
       content: gptResponse,
     });
 
-    await statusMessage.delete();
     await bot.api.sendMessage(userId, `${gptResponse}`);
+
+    await ogg.deleteAudioFiles(mp3Path, oggPath);
+
+    await statusMessage.delete();
   } catch (e: any) {
     console.error("Error handling voice prompt: ", e.message);
   }
 });
+
 
 bot.on(":text", async (ctx) => {
   try {
