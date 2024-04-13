@@ -4,9 +4,8 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon build/bot.js",
-    "start": "node build/bot.js",
+    "dev": "npx nodemon dist/bot.js",
+    "start": "npx tsc && node dist/bot.js",
     "build": "npx tsc"
   },
   "keywords": [],
@@ -16,15 +15,16 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@grammyjs/hydrate": "^1.4.1",
     "axios": "^1.6.7",
-    "dotenv": "^16.4.5",
     "fluent-ffmpeg": "^2.1.2",
     "grammy": "^1.21.1",
-    "nodemon": "^3.1.0",
-    "npm": "^10.4.0",
-    "openai": "^4.28.0"
+    "openai": "^4.28.0",
+    "@types/fluent-ffmpeg": "^2.1.24",
+    "@types/node": "^20.12.7",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
-    "@types/fluent-ffmpeg": "^2.1.24",
-    "typescript": "^5.3.3"
+    "nodemon": "^3.1.0"
   }
 }

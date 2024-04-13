@@ -6,8 +6,8 @@ import {
   GrammyError,
   HttpError,
 } from "grammy";
-import { ogg } from "./ogg.js";
-import { openai } from "./openai-api.js";
+import { ogg } from "./ogg.ts";
+import { openai } from "./openai-api.ts";
 import { hydrate, HydrateFlavor } from "@grammyjs/hydrate";
 import config from "../config/default.json"
 

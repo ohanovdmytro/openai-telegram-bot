@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:16-alpine
 
 WORKDIR /app
 
@@ -8,8 +8,11 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build
+ENV PORT=3000
 
-EXPOSE 3000
+ENV GENERATE_SOURCEMAP=false
+ENV NODE_OPTIONS=--max-old-space-size=6144
+
+EXPOSE $PORT
 
 CMD ["npm", "run", "start"]
