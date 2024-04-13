@@ -12,6 +12,10 @@ RUN  npm run build
 
 ENV PORT=3000
 
+ENV OPENAI_API_KEY=
+
+ENV BOT_API_KEY=
+
 EXPOSE $PORT
 
 CMD ["npm", "run", "start"]

@@ -1,4 +1,3 @@
-
 import {
   Bot,
   Context,
@@ -10,8 +9,6 @@ import {
 import { ogg } from "./ogg.js";
 import { openai } from "./openai-api.js";
 import { hydrate, HydrateFlavor } from "@grammyjs/hydrate";
-import config from "../config/default.json"
-
 
 interface SessionData {
   role: string;
@@ -20,7 +17,7 @@ interface SessionData {
 }
 
 type MyContext = HydrateFlavor<Context & SessionFlavor<SessionData>>;
-const bot = new Bot<MyContext>(config.BOT_API_KEY);
+const bot = new Bot<MyContext>(process.env.BOT_API_KEY);
 
 function initial(): SessionData {
   return { role: "", content: "", messages: [] };
@@ -49,7 +46,7 @@ bot.on(":voice", async (ctx) => {
 
     const voiceFile = await ctx.getFile();
     const filePath = voiceFile.file_path;
-    const fullPath = `https://api.telegram.org/file/bot${config.BOT_API_KEY}/${filePath}`;
+    const fullPath = `https://api.telegram.org/file/bot${process.env.BOT_API_KEY}/${filePath}`;
     const userId = String(ctx.message?.from.id);
 
     const oggPath: string = await ogg.create(fullPath, userId);
