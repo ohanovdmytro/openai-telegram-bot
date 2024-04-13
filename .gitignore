@@ -7,7 +7,7 @@ lib-cov
 *.pid
 *.gz
 *.swp
-config/default.json
+config/*.json
 
 pids
 logs
